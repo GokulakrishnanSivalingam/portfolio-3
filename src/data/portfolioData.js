@@ -2,7 +2,7 @@ import { Code, Server, Database, Globe, Layout, Cpu, Brain, ShieldAlert } from '
 import cloth from '../assets/cloth.png';
 import dd from '../assets/dd.png';
 import c from '../assets/crisiz.png';
-import me from "../assets/me.JPG"
+import me from '../assets/me.jpg';
 export const personalInfo = {
   name: "Gokulakrishnan S",
   role: "Software Developer",
