@@ -7,6 +7,10 @@ import ImageModal from './ImageModal';
 
 const Projects = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const initialProjectsCount = 3;
+  
+  const displayedProjects = showAll ? projects : projects.slice(0, initialProjectsCount);
 
   return (
     <section id="projects" className="section" style={{ background: 'var(--bg-secondary)' }}>
@@ -17,7 +21,7 @@ const Projects = () => {
         </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-          {projects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
@@ -89,6 +93,23 @@ const Projects = () => {
             </motion.div>
           ))}
         </div>
+
+        {projects.length > initialProjectsCount && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}
+          >
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="btn-outline"
+              style={{ padding: '0.8rem 2.5rem', fontSize: '1rem', cursor: 'pointer' }}
+            >
+              {showAll ? 'Show Less' : 'Show More Projects'}
+            </button>
+          </motion.div>
+        )}
       </div>
       
       {/* Lightbox / Modal for Project Image */}

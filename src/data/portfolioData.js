@@ -3,6 +3,11 @@ import cloth from '../assets/cloth.png';
 import dd from '../assets/dd.png';
 import c from '../assets/crisiz.png';
 import me from '../assets/me.jpg';
+import info from '../assets/info.jpg'
+import nptel from '../assets/nptel.png'
+import robo from '../assets/robo.jpg'
+import movie from '../assets/movie.png'
+import cal from '../assets/cal.png'
 export const personalInfo = {
   name: "Gokulakrishnan S",
   role: "Software Developer",
@@ -71,7 +76,22 @@ export const projects = [
     live: "https://cloth-ecommerce-seven.vercel.app/",
     github: "https://github.com/GokulakrishnanSivalingam/cloth-ecom-site",
     image: cloth
-  }
+  },
+ {
+  title: "Movie Streaming Website",
+  description: "Developed a responsive movie streaming platform with dynamic movie listings, search functionality, category-based filtering, and video playback integration. Focused on delivering a smooth user experience with fast loading and modern UI design.",
+  tech: ["React", "Node.js", "cloudinary", "Vercel"],
+  live: "https://jetplex.vercel.app/",
+  github: "https://github.com/GokulakrishnanSivalingam/movie-stream",
+  image: movie
+},{
+  title: "CGPA Calculator",
+  description: "Built an interactive CGPA calculator application that allows students to input subject grades and credits to instantly calculate GPA and cumulative CGPA with accurate academic performance insights.",
+  tech: ["React", "JavaScript", "CSS", "Vercel"],
+  live: "https://gokulakrishnansivalingam.github.io/cgpa-calculator/loginpage.html",
+  github: "https://github.com/GokulakrishnanSivalingam/cgpa-calculator",
+  image: cal
+}
 ];
 
 export const certificates = [
@@ -80,21 +100,21 @@ export const certificates = [
     title: "Programming in Java",
     issuer: "NPTEL",
     date: "2023",
-    image: "https://img.sanishtech.com/u/eab09d95c352c21cddc5a92ae308cf2c.png"
+    image: nptel
   },
   {
     id: 2,
     title: "Enhance Reactive Applications with Advanced React",
     issuer: "Infosys Springboard",
     date: "2024",
-    image: "https://img.sanishtech.com/u/630b08f68eefa8d8988779387edea534.jpg"
+    image: info
   },
   {
     id: 3,
     title: "Advanced robotics and cloud computing",
     issuer: "Velammal institution",
     date: "2023",
-    image: "https://img.sanishtech.com/u/850184fe50287a7e931a94588357d407.jpg"
+    image: robo
   }
 ];
 
