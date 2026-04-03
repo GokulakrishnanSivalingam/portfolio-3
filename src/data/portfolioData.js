@@ -89,7 +89,7 @@ export const projects = [
   description: "Built an interactive CGPA calculator application that allows students to input subject grades and credits to instantly calculate GPA and cumulative CGPA with accurate academic performance insights.",
   tech: ["React", "JavaScript", "CSS", "Vercel"],
   live: "https://gokulakrishnansivalingam.github.io/cgpa-calculator/loginpage.html",
-  github: "https://github.com/GokulakrishnanSivalingam/cgpa-calculator",
+  github: "https://github.com/GokulakrishnanSivalingam/cgpa-calculator~",
   image: cal
 }
 ];
