@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { certificates } from '../data/portfolioData';
-import { Award } from 'lucide-react';
+import SpotlightCard from './SpotlightCard';
 import ImageModal from './ImageModal';
+import { Award, Sparkles, Eye, ShieldCheck } from 'lucide-react';
 
 const Certificates = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
-    <section id="certificates" className="section">
-      <div className="container">
+    <section id="certificates" className="section" style={{ position: 'relative' }}>
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        {/* Section Header */}
         <div className="section-header">
-          <span className="section-subtitle">Achievements</span>
-          <h2 className="heading-lg">Certifications</h2>
+          <div className="section-badge">
+            <Sparkles size={13} />
+            <span>[ 05 / VERIFIED CREDENTIALS ]</span>
+          </div>
+          <h2 className="heading-xl">
+            Certifications & <br />
+            <span className="text-gradient">Recognitions</span>
+          </h2>
+          <p className="section-subtitle">
+            Formal technical certifications in Java Programming, Advanced React Architecture, and Cloud Robotics.
+          </p>
         </div>
-        
+
+        {/* Certificates Grid */}
         <div className="grid-cards">
           {certificates.map((cert, index) => (
             <motion.div
@@ -23,48 +35,137 @@ const Certificates = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="glass-panel"
-              style={{ padding: '1.5rem', display: 'flex', gap: '1.5rem', flexDirection: 'column' }}
             >
-              {cert.image && (
-                 <div 
-                   style={{ width: '100%', aspectRatio: '16/9', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', cursor: 'pointer' }}
-                   onClick={() => setSelectedImage(cert.image)}
-                   className="cert-hover"
+              <SpotlightCard
+                style={{
+                  padding: '1.75rem',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div>
+                  {cert.image && (
+                    <div
+                      style={{
+                        position: 'relative',
+                        width: '100%',
+                        aspectRatio: '16/10',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        border: '1px solid var(--border)',
+                        marginBottom: '1.5rem',
+                        cursor: 'pointer',
+                        background: '#040507'
+                      }}
+                      onClick={() => setSelectedImage(cert.image)}
+                    >
+                      <img
+                        src={cert.image}
+                        alt={cert.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s ease'
+                        }}
+                        onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                        onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                      />
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '0.65rem',
+                          right: '0.65rem',
+                          background: 'rgba(7, 8, 10, 0.8)',
+                          backdropFilter: 'blur(8px)',
+                          borderRadius: '50%',
+                          width: '32px',
+                          height: '32px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'var(--text-secondary)'
+                        }}
+                      >
+                        <Eye size={16} />
+                      </div>
+                    </div>
+                  )}
+
+                  <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                    <div
+                      style={{
+                        background: 'rgba(16, 185, 129, 0.12)',
+                        padding: '0.75rem',
+                        borderRadius: '12px',
+                        color: 'var(--accent)',
+                        flexShrink: 0
+                      }}
+                    >
+                      <Award size={24} />
+                    </div>
+
+                    <div>
+                      <h3
+                        className="heading-md"
+                        style={{ fontSize: '1.15rem', color: 'var(--text-primary)', marginBottom: '0.35rem' }}
+                      >
+                        {cert.title}
+                      </h3>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                        {cert.issuer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderTop: '1px solid var(--border)',
+                    paddingTop: '1rem',
+                    marginTop: '1.5rem'
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.8rem',
+                      color: 'var(--accent-light)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem'
+                    }}
                   >
-                    <style>{`
-                      .cert-hover img { transition: transform 0.3s ease; }
-                      .cert-hover:hover img { transform: scale(1.05); }
-                    `}</style>
-                    <img src={cert.image} alt={cert.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                 </div>
-              )}
-              <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                 <div style={{ 
-                    background: 'var(--accent-glow)', 
-                    padding: '1rem',
-                    borderRadius: '50%',
-                    color: 'var(--accent)',
-                  }}>
-                    <Award size={28} />
-                 </div>
-                 <div>
-                   <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{cert.title}</h3>
-                   <p style={{ color: 'var(--text-secondary)' }}>{cert.issuer}</p>
-                   <span style={{ fontSize: '0.875rem', color: 'var(--accent)', fontWeight: 500 }}>{cert.date}</span>
-                 </div>
-              </div>
+                    <ShieldCheck size={14} /> Verified Credential
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.8rem',
+                      color: 'var(--text-muted)'
+                    }}
+                  >
+                    {cert.date}
+                  </span>
+                </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>
       </div>
 
-      <ImageModal 
-         src={selectedImage} 
-         onClose={() => setSelectedImage(null)} 
+      <ImageModal
+        src={selectedImage}
+        onClose={() => setSelectedImage(null)}
       />
     </section>
   );
 };
 
 export default Certificates;
+
