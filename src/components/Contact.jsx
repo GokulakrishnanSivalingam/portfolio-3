@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import { personalInfo } from '../data/portfolioData';
 import SpotlightCard from './SpotlightCard';
@@ -18,6 +19,8 @@ const Contact = ({ preselectedService }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [formError, setFormError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,24 +46,51 @@ const Contact = ({ preselectedService }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
+    if (!formData.name || !formData.email || isSending) return;
 
-    setFormSubmitted(true);
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    // Fire celebratory confetti
-    confetti({
-      particleCount: 70,
-      spread: 80,
-      origin: { y: 0.6 },
-      colors: ['#10b981', '#34d399', '#06b6d4', '#8b5cf6']
-    });
+    if (!serviceId || !templateId || !publicKey) {
+      setFormError('Email service is not configured yet. Please email directly.');
+      return;
+    }
 
-    setTimeout(() => {
+    setIsSending(true);
+    setFormError('');
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          reply_to: formData.email,
+          service: serviceOptions.find((option) => option.id === selectedService)?.label,
+          message: formData.message
+        },
+        { publicKey }
+      );
+
+      setFormSubmitted(true);
+      confetti({
+        particleCount: 70,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#34d399', '#06b6d4', '#8b5cf6']
+      });
+
       setFormData({ name: '', email: '', message: '' });
-      setFormSubmitted(false);
-    }, 4000);
+      setTimeout(() => setFormSubmitted(false), 4000);
+    } catch (error) {
+      setFormError('Message could not be sent. Please try again or email directly.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -352,10 +382,13 @@ const Contact = ({ preselectedService }) => {
                 <button
                   type="submit"
                   className="btn-primary"
+                  disabled={isSending}
                   style={{
                     alignSelf: 'flex-start',
                     marginTop: '0.5rem',
-                    padding: '0.9rem 2.25rem'
+                    padding: '0.9rem 2.25rem',
+                    opacity: isSending ? 0.7 : 1,
+                    cursor: isSending ? 'wait' : 'pointer'
                   }}
                 >
                   {formSubmitted ? (
@@ -365,11 +398,16 @@ const Contact = ({ preselectedService }) => {
                     </>
                   ) : (
                     <>
-                      <span>Send Project Inquiry</span>
+                      <span>{isSending ? 'Sending Message...' : 'Send Project Inquiry'}</span>
                       <Send size={16} />
                     </>
                   )}
                 </button>
+                {formError && (
+                  <p style={{ color: '#f87171', fontSize: '0.85rem', margin: 0 }} role="alert">
+                    {formError}
+                  </p>
+                )}
               </form>
             </SpotlightCard>
           </motion.div>
