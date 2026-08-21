@@ -6,31 +6,47 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const Hero = ({ onOpenBlogs }) => {
   const [profileViews, setProfileViews] = useState(liveStats.initialProfileViews);
-  const [activeViewers, setActiveViewers] = useState(3);
   const [currentTime, setCurrentTime] = useState('');
 
-  // Real-time Profile Views Persistence & Dynamic Live Viewer Count
+  // Keep the total view count shared across visitors through the counter API.
   useEffect(() => {
-    try {
-      const storedViews = localStorage.getItem('gokul_portfolio_views');
-      let views = storedViews ? parseInt(storedViews, 10) : liveStats.initialProfileViews;
-      if (!sessionStorage.getItem('gokul_session_visited')) {
-        views += 1;
-        sessionStorage.setItem('gokul_session_visited', 'true');
-        localStorage.setItem('gokul_portfolio_views', views.toString());
+    const counterUrl = 'https://api.counterapi.dev/v1/gokul-portfolio-2026/views';
+    let isMounted = true;
+
+    const updateProfileViews = async (increment = false) => {
+      try {
+        const endpoint = increment ? `${counterUrl}/up` : `${counterUrl}/get`;
+        const response = await fetch(endpoint, { cache: 'no-store' });
+        if (!response.ok) throw new Error('View counter request failed');
+
+        const result = await response.json();
+        const total = Number(result.count ?? result.value);
+        if (isMounted && Number.isFinite(total)) {
+          setProfileViews(Math.max(liveStats.initialProfileViews, total));
+        }
+      } catch {
+        if (!isMounted) return;
+        setProfileViews(liveStats.initialProfileViews);
       }
-      setProfileViews(views);
-    } catch (e) {
-      setProfileViews(liveStats.initialProfileViews + 12);
+    };
+
+    try {
+      if (!sessionStorage.getItem('gokul_session_visited')) {
+        sessionStorage.setItem('gokul_session_visited', 'true');
+        updateProfileViews(true);
+      } else {
+        updateProfileViews();
+      }
+    } catch {
+      updateProfileViews();
     }
 
-    // Dynamic real-time viewer simulation
-    const viewerInterval = setInterval(() => {
-      const randomViewerChange = Math.floor(Math.random() * 3) + 2; // between 2 and 4 live viewers
-      setActiveViewers(randomViewerChange);
-    }, 8000);
+    const refreshInterval = setInterval(() => updateProfileViews(), 30000);
 
-    return () => clearInterval(viewerInterval);
+    return () => {
+      isMounted = false;
+      clearInterval(refreshInterval);
+    };
   }, []);
 
   // Live Chennai (IST) Clock
@@ -143,25 +159,6 @@ const Hero = ({ onOpenBlogs }) => {
               >
                 <Eye size={14} />
                 <span>{profileViews.toLocaleString()}+ Total Views</span>
-              </div>
-
-              {/* Realtime Live Viewers Pill */}
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  padding: '0.35rem 0.85rem',
-                  background: 'var(--bg-glass)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-full)',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.8rem',
-                  color: 'var(--text-secondary)'
-                }}
-              >
-                <span className="status-dot" style={{ width: '7px', height: '7px' }} />
-                <span>{activeViewers} viewing now</span>
               </div>
 
               {/* Local Time Indicator */}

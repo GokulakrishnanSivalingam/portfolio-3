@@ -169,8 +169,8 @@ export const projects = [
       "CSS3",
       "E-Commerce",
     ],
-    live: "#",
-    github: "#",
+    live: "https://auraluxx.vercel.app/",
+    github: "https://github.com/GokulakrishnanSivalingam/earphone-branding",
     image: "https://res.cloudinary.com/dnb5k6kpt/image/upload/v1787294092/auraluxx_uuu7zg.png",
   },
 
@@ -447,19 +447,30 @@ export const certificates = [
 
 export const experience = [
   {
-    role: "MERN Stack Development Intern",
-    company: "Klite Private Limited, Chennai",
-    date: "Jun 2024",
+    role: "Agentic AI Development Intern",
+    company: "OneSoft Technologies",
+    date: "May 2026 - Aug 2026",
     type: "Internship",
-    description: "Engineered scalable MERN stack web modules, optimized REST API performance by 30%, resolved database bottlenecks, and participated in Agile sprint reviews.",
-    highlights: ["30% Performance Boost", "MERN Stack Optimization", "Agile & Git Workflows"]
+    description:
+      "Developing AI-powered applications and agentic workflows using LLMs, RAG, LangChain, and LangGraph. Built intelligent workflows integrating retrieval, tool calling, and multi-step agent orchestration.",
+    highlights: [
+      "Agentic AI & LLMs",
+      "RAG & LangChain",
+      "LangGraph & AI Workflows"
+    ]
   },
   {
-    role: "Web Development In-plant Trainee",
-    company: "CodeBind Technology, Chennai",
-    date: "Nov 2024",
-    type: "Traineeship",
-    description: "Built responsive modern user interfaces with HTML5, CSS3, JavaScript, and collaborated on UI/UX wireframes and prototype workflows using Figma.",
-    highlights: ["Responsive UI Systems", "Figma Prototyping", "JavaScript ES6+"]
+    role: "MERN Stack Development Intern",
+    company: "Klite Private Limited, Chennai",
+    date: "Nov 2024 - Dec 2024",
+    type: "Internship",
+    description:
+      "Engineered scalable MERN stack web modules, optimized REST API performance by 30%, resolved database bottlenecks, and participated in Agile sprint reviews.",
+    highlights: [
+      "30% Performance Boost",
+      "MERN Stack Optimization",
+      "Agile & Git Workflows"
+    ]
   }
+  
 ];

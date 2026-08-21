@@ -90,8 +90,8 @@ const Navbar = ({ onOpenBlogs, theme, toggleTheme, isBlogPage, onBackToHome }) =
           >
             GS
           </div>
-          <span>
-            Gokul<span className="text-accent">akrishnan</span>
+          <span className="navbar-brand-name">
+            Gokul<span className="text-accent navbar-brand-suffix">akrishnan</span>
           </span>
         </a>
 
@@ -165,7 +165,7 @@ const Navbar = ({ onOpenBlogs, theme, toggleTheme, isBlogPage, onBackToHome }) =
           <button
             onClick={toggleTheme}
             aria-label="Toggle light/dark theme"
-            className="btn-secondary"
+            className="btn-secondary navbar-theme-toggle"
             style={{
               padding: '0.5rem',
               width: '36px',
@@ -193,7 +193,7 @@ const Navbar = ({ onOpenBlogs, theme, toggleTheme, isBlogPage, onBackToHome }) =
                 }, 100);
               }
             }}
-            className="btn-primary"
+            className="btn-primary navbar-cta"
             style={{
               padding: '0.5rem 1.15rem',
               fontSize: '0.85rem',
