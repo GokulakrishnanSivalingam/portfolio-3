@@ -14,56 +14,113 @@ import BlogPage from './pages/BlogPage';
 
 function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const [selectedService, setSelectedService] = useState('web-design');
-  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'blogs'
 
-  // Theme state: default to 'dark' or stored preference
+  const [selectedService, setSelectedService] = useState('web-design');
+
+  const [currentPage, setCurrentPage] = useState('home');
+
+  // =========================================================
+  // Theme State
+  // Light mode is the default theme
+  // =========================================================
   const [theme, setTheme] = useState(() => {
     try {
       const savedTheme = localStorage.getItem('gokul_theme');
-      if (savedTheme) return savedTheme;
-      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+
+      // If user has previously selected a theme, use it
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme;
+      }
+
+      // Default theme = LIGHT
+      return 'light';
     } catch (e) {
-      return 'dark';
+      // Fallback = LIGHT
+      return 'light';
     }
   });
 
+  // =========================================================
+  // Apply Theme
+  // =========================================================
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+
     try {
       localStorage.setItem('gokul_theme', theme);
-    } catch (e) { }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
   }, [theme]);
 
+  // =========================================================
+  // Toggle Theme
+  // =========================================================
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme((prevTheme) =>
+      prevTheme === 'dark' ? 'light' : 'dark'
+    );
   };
 
+  // =========================================================
+  // Open Blog Page
+  // =========================================================
   const handleOpenBlogs = () => {
     setCurrentPage('blogs');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
+  // =========================================================
+  // Back To Home
+  // =========================================================
   const handleBackToHome = () => {
     setCurrentPage('home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
     <div className="app-container">
-      {/* GSAP Intro Preloader (unmounts completely when loaded) */}
+
+      {/* =====================================================
+          GSAP Intro Preloader
+          ===================================================== */}
       {!loadingComplete && (
-        <Preloader onComplete={() => setLoadingComplete(true)} />
+        <Preloader
+          onComplete={() => setLoadingComplete(true)}
+        />
       )}
 
-      {/* Custom Glowing Cursor */}
+      {/* =====================================================
+          Custom Glowing Cursor
+          ===================================================== */}
       <CustomCursor />
 
-      {/* Background Grid Pattern & Noise */}
-      <div className="bg-grid-pattern" style={{ opacity: theme === 'light' ? 0.04 : 0.02 }} />
+      {/* =====================================================
+          Background Grid Pattern
+          ===================================================== */}
+      <div
+        className="bg-grid-pattern"
+        style={{
+          opacity: theme === 'light' ? 0.04 : 0.02,
+        }}
+      />
+
+      {/* =====================================================
+          Background Noise
+          ===================================================== */}
       <div className="bg-noise" />
 
-      {/* Conditional rendering: Dedicated Separate Blog Page vs Portfolio Home */}
+      {/* =====================================================
+          Blog Page
+          ===================================================== */}
       {currentPage === 'blogs' ? (
         <BlogPage
           onBackToHome={handleBackToHome}
@@ -72,7 +129,9 @@ function App() {
         />
       ) : (
         <>
-          {/* Main Navigation with Theme Switcher */}
+          {/* =================================================
+              Main Navigation
+              ================================================= */}
           <Navbar
             onOpenBlogs={handleOpenBlogs}
             theme={theme}
@@ -81,17 +140,51 @@ function App() {
             onBackToHome={handleBackToHome}
           />
 
-          <main style={{ position: 'relative', zIndex: 2 }}>
-            <Hero onOpenBlogs={handleOpenBlogs} />
-            <Services onSelectService={(serviceId) => setSelectedService(serviceId)} />
+          {/* =================================================
+              Main Portfolio Content
+              ================================================= */}
+          <main
+            style={{
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            {/* Hero */}
+            <Hero
+              onOpenBlogs={handleOpenBlogs}
+            />
+
+            {/* Services */}
+            <Services
+              onSelectService={(serviceId) =>
+                setSelectedService(serviceId)
+              }
+            />
+
+            {/* Projects */}
             <Projects />
+
+            {/* Experience */}
             <Experience />
+
+            {/* Certificates */}
             <Certificates />
+
+            {/* GitHub */}
             <GithubProfile />
-            <Contact preselectedService={selectedService} />
+
+            {/* Contact */}
+            <Contact
+              preselectedService={selectedService}
+            />
           </main>
 
-          <Footer onOpenBlogs={handleOpenBlogs} />
+          {/* =================================================
+              Footer
+              ================================================= */}
+          <Footer
+            onOpenBlogs={handleOpenBlogs}
+          />
         </>
       )}
     </div>
@@ -99,5 +192,3 @@ function App() {
 }
 
 export default App;
-
-

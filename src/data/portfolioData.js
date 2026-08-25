@@ -154,7 +154,28 @@ export const projects = [
       "https://github.com/GokulakrishnanSivalingam/dms-frontend",
     image: c,
   },
-
+ {
+  id: "iniya-sweets",
+  title: "Iniya — Sweets Store",
+  category: "Full-Stack",
+  description:
+    "A premium modern sweets e-commerce website designed for showcasing traditional Indian sweets with an elegant visual experience, product browsing, and a seamless online shopping journey.",
+  featured: true,
+  tech: [
+    "React",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "JavaScript",
+    "CSS3",
+    "Razorpay",
+    "Cloudinary",
+    "E-Commerce",
+  ],
+  live: "iniyasweets.vercel.app",
+  github: "https://github.com/GokulakrishnanSivalingam/iniya-sweets",
+  image: "https://res.cloudinary.com/dnb5k6kpt/image/upload/v1787628568/sweet_jd4bd9.png",
+},
   {
     id: "auralux",
     title: "Auralux — Premium Audio Store",
@@ -256,7 +277,7 @@ export const projects = [
   {
     id: "movie-streaming",
     title: "JetPlex — Movie Streaming Platform",
-    category: "Web App",
+    category: "Web Design / Frontend",
     description:
       "A high-performance movie streaming web application featuring dynamic content categorization, fast media search, Cloudinary integration, and a sleek dark interface.",
     featured: false,
@@ -276,7 +297,7 @@ export const projects = [
   {
     id: "cgpa-calculator",
     title: "Interactive Academic CGPA Engine",
-    category: "Web App",
+    category: "Web Design / Frontend",
     description:
       "An interactive academic calculation platform that allows students to calculate semester GPA and cumulative CGPA while providing instant academic performance insights.",
     featured: false,
